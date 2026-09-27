@@ -1,19 +1,359 @@
 <!DOCTYPE html>
-<html lang="ja" dir="ltr">
-    <head>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <div style="text-align: center">
-            <font size="7">
-                <h1>You are so stupid</h1>
-            </font>
-                <h6>F</h6>
-        </div>
-    </body>
-</html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Name / Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050810;
+    --surface:rgba(20,32,48,.55);
+    --surface-solid:#0c1420;
+    --border:rgba(130,190,230,.18);
+    --border-strong:rgba(130,190,230,.4);
+    --text:#DCEBF5;
+    --muted:#6E8AA3;
+    --accent:#7FE3FF;
+    --accent-soft:rgba(127,227,255,.14);
+    --accent-2:#B9C8FF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:#050810;}
+  a{color:inherit;text-decoration:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 
-<!--
-00000000000000011100101100100001001101111100011100000011010111111100011100000011010100011100011100000011010011011100011100000101000001011100011100000011001011111100011100000011010010011100011100000011001001111100011100000011000010011100101101001011011010011100011100000011010000000001101000010101110011110100111100000011110001110000001101010111110100110011101100111101110010110111000101110001110001110000001101010111110100110010110101000101110010110111111100000111110001110000001100011001110001110000001100000101110001110000010100010111110001110000010100010001110001110000001100001101110001110000001101010111110011010000000100111011110001110000001100010001110001110000010100010110000110100001010111010001000100010001000111001011001000110110011111001101011011110110001111000111000000110000100111010001010100110110001111000111000000110100000111000111000000110001100000011010000101011100101101110001011000011100011100000011010001111100011100000011010011011100011100000011000111111100011100000101000110011100011100000101000101111100011100000011000101111100011100000011010101000001101000010101110001110000010100000101110001110000001100001101110011110100111100000011110001110000001101010111110001110000001100010111110001110000001101111101110001110000001100001101110011010011001100000101110100110010110100100111110001110000001101010101110001110000010100100111110001110000001101001101110001110000001101010101110001110000001100001001110001110000001101000001110001110000010100011010000110100001010111001111010011110000001111000111000000110101011111001101001100110000010111010011001011010010011111000111000001010010010111001001011110110111111111000111000001010001111111000111000000110101010111000111000000110000100111000111000000110100111
-gssor://XXX.ldchzehqd.DPN.ehkd/6K2U5C1G9IMDKMX/zmrvdq.AJQ/ehkd
--->
+  /* ---------- ambient ice background ---------- */
+  #bg-glow{
+    position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(700px 420px at 10% -8%, rgba(127,227,255,.14), transparent 60%),
+      radial-gradient(560px 560px at 95% 10%, rgba(185,200,255,.08), transparent 60%),
+      radial-gradient(900px 500px at 50% 110%, rgba(80,140,180,.10), transparent 65%);
+    pointer-events:none;
+  }
+  #grid{
+    position:fixed;inset:0;z-index:-2;opacity:.30;
+    background-image:linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 70% 55% at 50% 0%, black 15%, transparent 75%);
+  }
+  /* thin frost fissures, purely decorative & very quiet */
+  #cracks{position:fixed;inset:0;z-index:-1;opacity:.5;pointer-events:none;}
+  #cracks svg{width:100%;height:100%;}
+  #cracks path{stroke:rgba(160,220,255,.10);stroke-width:1;fill:none;}
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  section{padding:96px 0;border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+
+  h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.5rem;
+    margin-bottom:28px;
+    display:flex;align-items:baseline;gap:12px;
+  }
+  h2 span.no{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent);}
+
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{
+    opacity:0;
+    filter:blur(4px);
+    transform:translateY(30px);
+    transition:opacity 1.1s cubic-bezier(.16,1,.3,1),
+               filter 1.1s cubic-bezier(.16,1,.3,1),
+               transform 1.1s cubic-bezier(.16,1,.3,1);
+    will-change:opacity, transform, filter;
+  }
+  .reveal.in-view{
+    opacity:1;
+    filter:blur(0);
+    transform:translateY(0);
+  }
+
+  /* ---------- hero ---------- */
+  #hero{
+    min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+    border-bottom:1px solid var(--border);
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--accent);
+    font-size:.85rem;letter-spacing:.02em;margin-bottom:18px;
+    opacity:0;animation:rise .6s .1s ease forwards;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(2.4rem,7vw,4.2rem);
+    line-height:1.05;
+    letter-spacing:-.01em;
+    background:linear-gradient(120deg,#F4FBFF 0%, var(--accent) 60%, var(--accent-2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    opacity:0;animation:rise .7s .25s ease forwards;
+  }
+  .frost-line{
+    height:1px;width:0;margin-top:26px;
+    background:linear-gradient(90deg, var(--accent), transparent);
+    animation:draw 1.1s .55s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  #hero .tagline{
+    margin-top:22px;font-size:1.05rem;color:var(--muted);max-width:520px;
+    opacity:0;animation:rise .7s .45s ease forwards;
+  }
+  .typecursor{display:inline-block;width:2px;height:.85em;background:var(--accent);
+    margin-left:3px;vertical-align:-.1em;animation:blink 1s step-end infinite;}
+
+  .social-row{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;
+    opacity:0;animation:rise .7s .75s ease forwards;}
+  .social-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 16px;border:1px solid var(--border);border-radius:8px;
+    font-family:'JetBrains Mono',monospace;font-size:.85rem;
+    background:var(--surface);backdrop-filter:blur(10px);
+    transition:border-color .2s ease, transform .2s ease, background .2s ease;
+  }
+  .social-btn:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px);}
+  .social-btn svg{width:16px;height:16px;fill:currentColor;}
+
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes draw{to{width:220px;}}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- about ---------- */
+  #about p{color:var(--text);max-width:64ch;}
+  #about p + p{margin-top:16px;}
+
+  /* ---------- setup ---------- */
+  .spec{margin-bottom:20px;}
+  .spec-row{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:'JetBrains Mono',monospace;font-size:.9rem;margin-bottom:8px;}
+  .spec-row .label{color:var(--muted);}
+  .spec-row .value{color:var(--text);}
+  .bar-track{height:6px;border-radius:3px;background:var(--surface-solid);overflow:hidden;border:1px solid var(--border);}
+  .bar-fill{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-2));border-radius:3px;width:0;
+    transition:width 1.1s cubic-bezier(.16,1,.3,1);}
+  .bar-fill.in-view{width:var(--pct);}
+
+  /* ---------- games grid (with cover art) ---------- */
+  .game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;}
+  .game-card{
+    position:relative;aspect-ratio:3/4;border-radius:10px;overflow:hidden;
+    border:1px solid var(--border);
+    background:linear-gradient(160deg, var(--surface-solid), #0a1220);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .game-card:hover{border-color:var(--accent);transform:translateY(-4px);}
+  .game-card img{width:100%;height:100%;object-fit:cover;display:block;}
+  .game-card .title{
+    position:absolute;left:0;right:0;bottom:0;padding:10px 12px;
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;line-height:1.35;color:var(--text);
+    background:linear-gradient(0deg, rgba(5,8,16,.92) 20%, rgba(5,8,16,0));
+  }
+
+  /* ---------- contact ---------- */
+  #contact .lead{color:var(--muted);margin-bottom:28px;max-width:52ch;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .contact-card{
+    padding:20px;border:1px solid var(--border);border-radius:10px;
+    background:var(--surface);backdrop-filter:blur(10px);
+    transition:border-color .2s ease, transform .2s ease, background .2s ease;
+  }
+  .contact-card:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-3px);}
+  .contact-card .plat{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.8rem;margin-bottom:6px;}
+  .contact-card .handle{font-family:'Space Grotesk',sans-serif;font-size:1rem;}
+
+  footer{padding:40px 0 60px;text-align:left;color:var(--muted);font-size:.85rem;
+    font-family:'JetBrains Mono',monospace;}
+
+  @media (max-width:640px){
+    section{padding:64px 0;}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1 !important;filter:none !important;transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="bg-glow"></div>
+<div id="grid"></div>
+<div id="cracks">
+  <svg viewBox="0 0 800 1200" preserveAspectRatio="none">
+    <path d="M0 120 L180 160 L260 90 L420 140 L520 60"/>
+    <path d="M0 640 L140 610 L230 690 L380 650 L500 720 L650 660"/>
+    <path d="M800 300 L640 340 L560 260 L440 310"/>
+  </svg>
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="wrap reveal">
+    <div class="eyebrow">// Welcome to my page . . . Why was it found?</div>
+    <h1>無季 氷下魚<span class="typecursor"></span></h1>
+    <div class="frost-line"></div>
+    <p class="tagline">氷の下に潜む氷下魚のように、静かに、でも着実に。ゲームとPCが好きなエンジニア/クリエイターです。</p>
+    <div class="social-row">
+      <a class="social-btn" href="https://x.com/MukikomaiT" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-6.9L4.4 22H1.3l8.2-9.4L1 2h7l4.9 6.3L18.9 2Zm-1.2 18h1.9L7.4 3.9H5.4L17.7 20Z"/></svg>
+        X (Twitter)
+      </a>
+      <a class="social-btn" href="https://youtube.com/@mukikomaiT" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M23 12s0-3.6-.5-5.3a3 3 0 0 0-2.1-2.1C18.7 4 12 4 12 4s-6.7 0-8.4.6A3 3 0 0 0 1.5 6.7C1 8.4 1 12 1 12s0 3.6.5 5.3a3 3 0 0 0 2.1 2.1C5.3 20 12 20 12 20s6.7 0 8.4-.6a3 3 0 0 0 2.1-2.1C23 15.6 23 12 23 12ZM9.8 15.5V8.5l6 3.5-6 3.5Z"/></svg>
+        YouTube
+      </a>
+      <a class="social-btn" href="https://twitch.tv/mukikomai_t" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M4 2 2 6.5v13h5.5V22l3.5-2.5h4L21 14V2H4Zm15 11-3 3h-4l-3 2.5V16H5V4h14v9Z"/><path d="M15.5 7h2v4.5h-2V7ZM10 7h2v4.5h-2V7Z"/></svg>
+        Twitch
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap reveal">
+    <h2><span class="no">01</span>About</h2>
+    <p>はじめまして、無季 氷下魚です。普段はVtuberとして活動しながら、空いた時間はほぼPCの前で過ごしています。ゲームだけでなく自作PCや配信環境をいじるのも好きで、このページも試行錯誤しながら少しずつ作っています。</p>
+    <p>ここでは自己紹介や今使っているPCのスペック、遊んできたゲームなどをまとめています。気になったことがあれば下記のSNSから気軽に連絡してください。</p>
+  </div>
+</section>
+
+<!-- ============ SETUP ============ -->
+<section id="setup">
+  <div class="wrap reveal">
+    <h2><span class="no">02</span>My Setup</h2>
+
+    <div class="spec">
+      <div class="spec-row"><span class="label">CPU</span><span class="value">AMD Ryzen 7 7700 8-Core Processor</span></div>
+      <div class="bar-track"><div class="bar-fill" style="--pct:82%"></div></div>
+    </div>
+    <div class="spec">
+      <div class="spec-row"><span class="label">GPU</span><span class="value">NVIDIA GeForce RTX 5070</span></div>
+      <div class="bar-track"><div class="bar-fill" style="--pct:92%"></div></div>
+    </div>
+    <div class="spec">
+      <div class="spec-row"><span class="label">RAM</span><span class="value">32GB</span></div>
+      <div class="bar-track"><div class="bar-fill" style="--pct:65%"></div></div>
+    </div>
+    <div class="spec">
+      <div class="spec-row"><span class="label">SSD</span><span class="value">2TB</span></div>
+      <div class="bar-track"><div class="bar-fill" style="--pct:60%"></div></div>
+    </div>
+    <div class="spec">
+      <div class="spec-row"><span class="label">HDD</span><span class="value">2TB</span></div>
+      <div class="bar-track"><div class="bar-fill" style="--pct:40%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GAMES ============ -->
+<!-- ここを編集: 各カードの src="images/games/○○.jpg" を実際の画像パスに差し替えてください。 -->
+<section id="games">
+  <div class="wrap reveal">
+    <h2><span class="no">03</span>Games I've Played</h2>
+    <div class="game-grid">
+      <div class="game-card">
+        <img src="images/games/minecraft.jpg" alt="Minecraft" loading="lazy" onerror="this.remove()">
+        <div class="title">Minecraft</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/apex.jpg" alt="Apex Legends" loading="lazy" onerror="this.remove()">
+        <div class="title">Apex Legends</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/valorant.jpg" alt="VALORANT" loading="lazy" onerror="this.remove()">
+        <div class="title">VALORANT</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/mhw-iceborne.jpg" alt="Monster Hunter World: Iceborne" loading="lazy" onerror="this.remove()">
+        <div class="title">Monster Hunter World: Iceborne</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/mhrise-sunbreak.jpg" alt="Monster Hunter Rise: Sunbreak" loading="lazy" onerror="this.remove()">
+        <div class="title">Monster Hunter Rise: Sunbreak</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/mh-wilds.jpg" alt="Monster Hunter Wilds" loading="lazy" onerror="this.remove()">
+        <div class="title">Monster Hunter Wilds</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/7days-to-die.jpg" alt="7 Days to Die" loading="lazy" onerror="this.remove()">
+        <div class="title">7 Days to Die</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/among-us.jpg" alt="Among Us" loading="lazy" onerror="this.remove()">
+        <div class="title">Among Us</div>
+      </div>
+      <div class="game-card">
+        <img src="images/games/repo.jpg" alt="REPO" loading="lazy" onerror="this.remove()">
+        <div class="title">REPO</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<!-- ここを編集: 各SNSのユーザー名・リンク先 -->
+<section id="contact">
+  <div class="wrap reveal">
+    <h2><span class="no">04</span>Contact</h2>
+    <p class="lead">お仕事のご相談やコラボのお誘いなど、お気軽にどうぞ。</p>
+    <div class="contact-grid">
+      <a class="contact-card" href="https://x.com/yourid" target="_blank" rel="noopener">
+        <div class="plat">X (Twitter)</div><div class="handle">@yourid</div>
+      </a>
+      <a class="contact-card" href="https://youtube.com/@yourid" target="_blank" rel="noopener">
+        <div class="plat">YouTube</div><div class="handle">@yourid</div>
+      </a>
+      <a class="contact-card" href="https://twitch.tv/yourid" target="_blank" rel="noopener">
+        <div class="plat">Twitch</div><div class="handle">yourid</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 無季 氷下魚</div>
+</footer>
+
+<script>
+  // スペックバーはビューポートに入ったら伸びる
+  const bars = document.querySelectorAll('.bar-fill');
+  const barIO = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in-view'); barIO.unobserve(e.target); }
+    });
+  }, {threshold:.4});
+  bars.forEach(b=>barIO.observe(b));
+
+  // 要素が画面内に入ったらフェードイン、画面外に出たら次に備えてリセットする
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      entry.target.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, {threshold:.1, rootMargin:'0px 0px -10% 0px'});
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      revealEls.forEach(el => revealIO.observe(el));
+    });
+  });
+</script>
+</body>
+</html>
