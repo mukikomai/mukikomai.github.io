@@ -228,27 +228,101 @@
   }
 
   .profile-hero{
-    grid-template-columns:1fr;
-    gap:36px;
+    display:block;
+    position:relative;
+    min-height:0;
   }
 
+  /* スマホでは人物をボックスの背後に巨大表示 */
   .profile-character-wrap{
-    min-height:360px;
+    position:absolute;
+    z-index:1;
+    left:-18vw;
+    top:-90px;
+    width:120%;
+    height:200%;
+    min-height:0;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    pointer-events:none;
+    overflow:visible;
   }
 
   .profile-character{
-    max-width:280px;
+    width:150%;
+    height:200%;
+    max-width:none;
+    object-fit:contain;
+    object-position:center top;
+    opacity:.78;
+  }
+
+  .profile-main{
+    position:relative;
+    z-index:2;
+    width:100%;
+    margin-left:0;
+  }
+
+  
+/* 名前 + 顔アップを同じボックスにする */
+  .profile-visual{
+  position:relative;
+  min-height:400px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface);
+  backdrop-filter:blur(10px);
+  }
+
+  /* 顔のドアップ */
+  .profile-visual::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(5,8,16,.94) 30%,
+      rgba(5,8,16,.78) 50%,
+      rgba(5,8,16,.35) 70%,
+      rgba(5,8,16,.08) 98%,
+      rgba(5,8,16,.0) 100%
+    ),
+    var(--profile-face);
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  opacity:1;
+}
+  .profile-data,
+  .description-box{
+    position:relative;
+    z-index:2;
   }
 
   .profile-visual{
-    min-height:300px;
+    min-height:100px;
   }
 
   .profile-name{
-    left:2%;
-    bottom:10%;
-    font-size:clamp(2.7rem,13vw,5rem);
-  }
+  position:absolute;
+  z-index:2;
+  left:2%;
+  bottom:20%;
+  margin:0;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(3rem,8vw,3.8rem);
+  font-weight:700;
+  line-height:.95;
+  letter-spacing:-.035em;
+  color:#F4FBFF;
+  text-shadow:0 12px 30px rgba(0,0,0,.5);
+}
+
 }
 
 @media(max-width:520px){
