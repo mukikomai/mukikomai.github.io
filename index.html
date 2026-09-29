@@ -3,207 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Name / Portfolio</title>
+<title>無季 氷下魚 | HOME</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#050810;
-    --surface:rgba(20,32,48,.55);
-    --surface-solid:#0c1420;
-    --border:rgba(130,190,230,.18);
-    --border-strong:rgba(130,190,230,.4);
-    --text:#DCEBF5;
-    --muted:#6E8AA3;
-    --accent:#7FE3FF;
-    --accent-soft:rgba(127,227,255,.14);
-    --accent-2:#B9C8FF;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    line-height:1.7;
-    overflow-x:hidden;
-  }
-  ::selection{background:var(--accent);color:#050810;}
-  a{color:inherit;text-decoration:none;}
-  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-
-  /* ---------- ambient ice background ---------- */
-  #bg-glow{
-    position:fixed;inset:0;z-index:-2;
-    background:
-      radial-gradient(700px 420px at 10% -8%, rgba(127,227,255,.14), transparent 60%),
-      radial-gradient(560px 560px at 95% 10%, rgba(185,200,255,.08), transparent 60%),
-      radial-gradient(900px 500px at 50% 110%, rgba(80,140,180,.10), transparent 65%);
-    pointer-events:none;
-  }
-  #grid{
-    position:fixed;inset:0;z-index:-2;opacity:.30;
-    background-image:linear-gradient(var(--border) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size:64px 64px;
-    mask-image:radial-gradient(ellipse 70% 55% at 50% 0%, black 15%, transparent 75%);
-  }
-  /* thin frost fissures, purely decorative & very quiet */
-  #cracks{position:fixed;inset:0;z-index:-1;opacity:.5;pointer-events:none;}
-  #cracks svg{width:100%;height:100%;}
-  #cracks path{stroke:rgba(160,220,255,.10);stroke-width:1;fill:none;}
-
-  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
-  section{padding:96px 0;border-bottom:1px solid var(--border);}
-  section:last-of-type{border-bottom:none;}
-
-  h2{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:1.5rem;
-    margin-bottom:28px;
-    display:flex;align-items:baseline;gap:12px;
-  }
-  h2 span.no{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent);}
-
-  /* ---------- reveal-on-scroll ---------- */
-  .reveal{
-    opacity:0;
-    filter:blur(4px);
-    transform:translateY(30px);
-    transition:opacity 1.1s cubic-bezier(.16,1,.3,1),
-               filter 1.1s cubic-bezier(.16,1,.3,1),
-               transform 1.1s cubic-bezier(.16,1,.3,1);
-    will-change:opacity, transform, filter;
-  }
-  .reveal.in-view{
-    opacity:1;
-    filter:blur(0);
-    transform:translateY(0);
-  }
-
-  /* ---------- hero ---------- */
-  #hero{
-    min-height:92vh;display:flex;flex-direction:column;justify-content:center;
-    border-bottom:1px solid var(--border);
-    position:relative;
-  }
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace;color:var(--accent);
-    font-size:.85rem;letter-spacing:.02em;margin-bottom:18px;
-    opacity:0;animation:rise .6s .1s ease forwards;
-  }
-  h1{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:clamp(2.4rem,7vw,4.2rem);
-    line-height:1.05;
-    letter-spacing:-.01em;
-    background:linear-gradient(120deg,#F4FBFF 0%, var(--accent) 60%, var(--accent-2) 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    opacity:0;animation:rise .7s .25s ease forwards;
-  }
-  .frost-line{
-    height:1px;width:0;margin-top:26px;
-    background:linear-gradient(90deg, var(--accent), transparent);
-    animation:draw 1.1s .55s cubic-bezier(.16,1,.3,1) forwards;
-  }
-  #hero .tagline{
-    margin-top:22px;font-size:1.05rem;color:var(--muted);max-width:520px;
-    opacity:0;animation:rise .7s .45s ease forwards;
-  }
-  .typecursor{display:inline-block;width:2px;height:.85em;background:var(--accent);
-    margin-left:3px;vertical-align:-.1em;animation:blink 1s step-end infinite;}
-
-  .social-row{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;
-    opacity:0;animation:rise .7s .75s ease forwards;}
-  .social-btn{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:10px 16px;border:1px solid var(--border);border-radius:8px;
-    font-family:'JetBrains Mono',monospace;font-size:.85rem;
-    background:var(--surface);backdrop-filter:blur(10px);
-    transition:border-color .2s ease, transform .2s ease, background .2s ease;
-  }
-  .social-btn:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px);}
-  .social-btn svg{width:16px;height:16px;fill:currentColor;}
-
-  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-  @keyframes draw{to{width:220px;}}
-  @keyframes blink{50%{opacity:0;}}
-
-  /* ---------- about ---------- */
-  #about p{color:var(--text);max-width:64ch;}
-  #about p + p{margin-top:16px;}
-
-  /* ---------- setup ---------- */
-  .spec{margin-bottom:20px;}
-  .spec-row{display:flex;justify-content:space-between;align-items:baseline;
-    font-family:'JetBrains Mono',monospace;font-size:.9rem;margin-bottom:8px;}
-  .spec-row .label{color:var(--muted);}
-  .spec-row .value{color:var(--text);}
-  .bar-track{height:6px;border-radius:3px;background:var(--surface-solid);overflow:hidden;border:1px solid var(--border);}
-  .bar-fill{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-2));border-radius:3px;width:0;
-    transition:width 1.1s cubic-bezier(.16,1,.3,1);}
-  .bar-fill.in-view{width:var(--pct);}
-
-  /* ---------- games grid (with cover art) ---------- */
-  .game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;}
-  .game-card{
-    position:relative;aspect-ratio:3/4;border-radius:10px;overflow:hidden;
-    border:1px solid var(--border);
-    background:linear-gradient(160deg, var(--surface-solid), #0a1220);
-    transition:border-color .2s ease, transform .2s ease;
-  }
-  .game-card:hover{border-color:var(--accent);transform:translateY(-4px);}
-  .game-card img{width:100%;height:100%;object-fit:cover;display:block;}
-  .game-card .title{
-    position:absolute;left:0;right:0;bottom:0;padding:10px 12px;
-    font-family:'JetBrains Mono',monospace;font-size:.76rem;line-height:1.35;color:var(--text);
-    background:linear-gradient(0deg, rgba(5,8,16,.92) 20%, rgba(5,8,16,0));
-  }
-  
-  /* ---------- character & illustration ---------- */
-  #character{
-    text-align:center;
-  }
-
-  .character-art{
-    margin-top:40px;
-  }
-
-  .character-art img{
-    display:block;
-    width:100%;
-    max-width:680px;
-    height:auto;
-    margin:0 auto 80px;
-    border-radius:12px;
-  }
-
-  .character-art img:last-child{
-    margin-bottom:0;
-  }
-
-  /* ---------- contact ---------- */
-  #contact .lead{color:var(--muted);margin-bottom:28px;max-width:52ch;}
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-  .contact-card{
-    padding:20px;border:1px solid var(--border);border-radius:10px;
-    background:var(--surface);backdrop-filter:blur(10px);
-    transition:border-color .2s ease, transform .2s ease, background .2s ease;
-  }
-  .contact-card:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-3px);}
-  .contact-card .plat{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.8rem;margin-bottom:6px;}
-  .contact-card .handle{font-family:'Space Grotesk',sans-serif;font-size:1rem;}
-
-  footer{padding:40px 0 60px;text-align:left;color:var(--muted);font-size:.85rem;
-    font-family:'JetBrains Mono',monospace;}
-
-  @media (max-width:640px){
-    section{padding:64px 0;}
-    .contact-grid{grid-template-columns:1fr;}
-  }
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -216,6 +20,16 @@
     <path d="M800 300 L640 340 L560 260 L440 310"/>
   </svg>
 </div>
+
+<header id="site-nav">
+  <img class="nav-logo" src="images/無季 氷下魚.png" alt="無季 氷下魚 ロゴ" >
+  <nav class="nav-links">
+    <a href="index.html" class="active">HOME</a>
+    <a href="profile.html">Profile</a>
+    <a href="pvcreate.html">PV Create</a>
+    <a href="fa.html">FA</a>
+  </nav>
+</header>
 
 <!-- ============ HERO ============ -->
 <section id="hero">
@@ -254,7 +68,6 @@
 <section id="setup">
   <div class="wrap reveal">
     <h2><span class="no">02</span>My Setup</h2>
-
     <div class="spec">
       <div class="spec-row"><span class="label">CPU</span><span class="value">AMD Ryzen 7 7700 8-Core Processor</span></div>
       <div class="bar-track"><div class="bar-fill" style="--pct:82%"></div></div>
@@ -279,7 +92,7 @@
 </section>
 
 <!-- ============ GAMES ============ -->
-<!-- ここを編集: 各カードの src="images/games/○○.jpg" を実際の画像パスに差し替えてください。 -->
+<!-- ここを編集: 各カードの src="images/games/○○" を実際の画像パスに差し替えてください。 -->
 <section id="games">
   <div class="wrap reveal">
     <h2><span class="no">03</span>Games I've Played</h2>
@@ -338,7 +151,6 @@
 </section>
 
 <!-- ============ CONTACT ============ -->
-<!-- ここを編集: 各SNSのユーザー名・リンク先 -->
 <section id="contact">
   <div class="wrap reveal">
     <h2><span class="no">05</span>Contact</h2>
@@ -361,29 +173,6 @@
   <div class="wrap">© 2026 無季 氷下魚</div>
 </footer>
 
-<script>
-  // スペックバーはビューポートに入ったら伸びる
-  const bars = document.querySelectorAll('.bar-fill');
-  const barIO = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in-view'); barIO.unobserve(e.target); }
-    });
-  }, {threshold:.4});
-  bars.forEach(b=>barIO.observe(b));
-
-  // 要素が画面内に入ったらフェードイン、画面外に出たら次に備えてリセットする
-  const revealEls = document.querySelectorAll('.reveal');
-  const revealIO = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      entry.target.classList.toggle('in-view', entry.isIntersecting);
-    });
-  }, {threshold:.1, rootMargin:'0px 0px -10% 0px'});
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      revealEls.forEach(el => revealIO.observe(el));
-    });
-  });
-</script>
+<script src="js/main.js" defer></script>
 </body>
 </html>
