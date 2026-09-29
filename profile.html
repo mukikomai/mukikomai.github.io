@@ -11,6 +11,268 @@
 </head>
 <body>
 
+<style>
+/* =========================================================
+   Profile 専用追記CSS
+   既存の共通CSSは変更せず、この部分だけ追加してください
+   ========================================================= */
+
+/* ---------- profile ---------- */
+
+.profile-page{
+  max-width:1100px;
+  margin:0 auto;
+  padding:96px 24px 120px;
+}
+
+.profile-main{
+  width:100%;
+}
+
+/* 名前 + 顔アップを同じボックスにする */
+.profile-visual{
+  position:relative;
+  min-height:100px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface);
+  backdrop-filter:blur(10px);
+}
+
+/* 顔のドアップ */
+.profile-visual::before{
+  content:'';
+  min-height: 500%;
+  min-width: 170%;
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(5,8,16,.94) 30%,
+      rgba(5,8,16,.78) 50%,
+      rgba(5,8,16,.35) 70%,
+      rgba(5,8,16,.08) 98%,
+      rgba(5,8,16,.0) 100%
+    ),
+    var(--profile-face);
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  opacity:1;
+}
+
+/* 名前 */
+.profile-name{
+  position:absolute;
+  z-index:2;
+  left:2%;
+  bottom:20%;
+  margin:0;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(3rem,8vw,3.8rem);
+  font-weight:700;
+  line-height:.95;
+  letter-spacing:-.035em;
+  color:#F4FBFF;
+  text-shadow:0 12px 30px rgba(0,0,0,.5);
+}
+
+/* 画像の下に敷く暗い膜 */
+.profile-visual::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(
+    0deg,
+    rgba(5,8,16,.48) 0%,
+    transparent 55%
+  );
+}
+
+/* ---------- 左のふよふよ画像 ---------- */
+
+.profile-character-wrap{
+  display:flex;
+  justify-content:center;
+  left:clamp(-180px, -8vw, -70px);
+  width:clamp(420px, 42vw, 620px);
+  height:200%;
+  align-items:center;
+  justify-content:center;
+}
+
+.profile-character{
+  display:block;
+  width:100%;
+  height:120%;
+  object-fit:contain;
+  animation:profileFloat 4s ease-in-out infinite;
+  filter:drop-shadow(-18px 18px 2px rgba(0,0,0,.28));
+}
+
+@keyframes profileFloat{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-14px);}
+}
+
+/* ---------- 上部レイアウト ---------- */
+
+.profile-hero{
+  display:grid;
+  grid-template-columns:360px minmax(0,1fr);
+  gap:64px;
+  align-items:center;
+}
+
+/* ---------- 4項目 ---------- */
+
+.profile-data{
+  margin-top:28px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--surface);
+  backdrop-filter:blur(10px);
+}
+
+.profile-data-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+.profile-data-item{
+  padding:20px 22px;
+  min-height:88px;
+  border-bottom:1px solid var(--border);
+}
+
+.profile-data-item:nth-child(odd){
+  border-right:1px solid var(--border);
+}
+
+.profile-data-item:nth-last-child(-n+2){
+  border-bottom:none;
+}
+
+.profile-label{
+  display:block;
+  margin-bottom:6px;
+  color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  letter-spacing:.04em;
+}
+
+.profile-value{
+  display:block;
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.95rem;
+}
+
+.profile-value a{
+  color:var(--accent);
+}
+
+/* ---------- 棒 ---------- */
+
+.description-divider{
+  height:72px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.description-divider::before{
+  content:'';
+  width:1px;
+  height:72px;
+  background:var(--border-strong);
+}
+
+/* ---------- DESCRIPTION ---------- */
+
+.description-box{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:28px 30px 32px;
+  background:var(--surface);
+  backdrop-filter:blur(10px);
+}
+
+.description-title{
+  margin:0 0 20px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  letter-spacing:.08em;
+  color:var(--accent);
+}
+
+.description-text{
+  color:var(--text);
+  font-size:.9rem;
+  line-height:2;
+  white-space:pre-line;
+}
+
+/* ---------- mobile ---------- */
+
+@media(max-width:800px){
+  .profile-page{
+    padding:64px 18px 90px;
+  }
+
+  .profile-hero{
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+
+  .profile-character-wrap{
+    min-height:360px;
+  }
+
+  .profile-character{
+    max-width:280px;
+  }
+
+  .profile-visual{
+    min-height:300px;
+  }
+
+  .profile-name{
+    left:2%;
+    bottom:10%;
+    font-size:clamp(2.7rem,13vw,5rem);
+  }
+}
+
+@media(max-width:520px){
+  .profile-data-grid{
+    grid-template-columns:1fr;
+  }
+
+  .profile-data-item:nth-child(odd){
+    border-right:none;
+  }
+
+  .profile-data-item:nth-last-child(-n+2){
+    border-bottom:1px solid var(--border);
+  }
+
+  .profile-data-item:last-child{
+    border-bottom:none;
+  }
+}
+</style>
+</head>
+
+<body>
+  
 <div id="bg-glow"></div>
 <div id="grid"></div>
 <div id="cracks">
@@ -30,11 +292,78 @@
     <a href="fa.html">FA</a>
   </nav>
 </header>
+<main class="profile-page">
 
-<section class="wrap page-head reveal">
-  <h1>Profile</h1>
-  <div class="coming-soon">ここにプロフィール(経歴・スキル・活動内容など)を書いていく予定です。</div>
-</section>
+  <section class="profile-hero">
+
+    <!-- 左：ふよふよ上下する人物画像 -->
+    <div class="profile-character-wrap">
+      <img
+        class="profile-character"
+        src="images/illustration.png"
+        alt="プロフィール画像"
+      >
+    </div>
+
+    <!-- 右 -->
+    <div class="profile-main">
+
+      <!-- 名前 + 顔ドアップを同じボックス -->
+      <!-- 顔画像は style の --profile-face で指定 -->
+      <div
+        class="profile-visual"
+        style="--profile-face:url('images/Vpro.png');"
+      >
+        <h1 class="profile-name">無季 氷下魚</h1>
+      </div>
+
+      <!-- 2列×2行 -->
+      <div class="profile-data">
+
+        <div class="profile-data-grid">
+
+          <div class="profile-data-item">
+            <span class="profile-label">配信時間</span>
+            <span class="profile-value">00:00 ～ 00:00</span>
+          </div>
+
+          <div class="profile-data-item">
+            <span class="profile-label">プラットフォーム</span>
+            <span class="profile-value">
+              <a href="#" target="_blank" rel="noopener">Twitch</a>
+            </span>
+          </div>
+
+          <div class="profile-data-item">
+            <span class="profile-label">誕生日</span>
+            <span class="profile-value">00月00日</span>
+          </div>
+
+          <div class="profile-data-item">
+            <span class="profile-label">ファンアート</span>
+            <span class="profile-value">#NAME_FA</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 棒 -->
+      <div class="description-divider"></div>
+
+      <!-- DESCRIPTION -->
+      <section class="description-box">
+        <h2 class="description-title">DESCRIPTION</h2>
+
+        <p class="description-text">ここにプロフィールの紹介文を入れます。
+
+配信内容、活動内容、好きなゲームなど、
+その人について自由に紹介できます。</p>
+      </section>
+
+    </div>
+  </section>
+
+</main>
 
 <footer>
   <div class="wrap">© 2026 無季 氷下魚</div>
