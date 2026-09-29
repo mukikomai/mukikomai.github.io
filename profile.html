@@ -11,79 +11,6 @@
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .profile-page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 96px 24px 120px;
-    }
-
-    .profile-main {
-      width: 100%;
-      z-index: 2;
-    }
-
-    /* 名前 + 顔アップを同じボックスにする */
-    .profile-visual {
-      position: relative;
-      height: 100px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      backdrop-filter: blur(10px);
-    }
-
-    /* 顔のドアップ */
-    .profile-visual::before {
-      z-index: 0;
-      content: '';
-      height: 420px;
-      width: 800px;
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(90deg,
-          rgba(5, 8, 16, .94) 30%,
-          rgba(5, 8, 16, .78) 50%,
-          rgba(5, 8, 16, .35) 70%,
-          rgba(5, 8, 16, .08) 98%,
-          rgba(5, 8, 16, .0) 100%),
-        var(--profile-face);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 1;
-    }
-
-    /* 名前 */
-    .profile-name {
-      position: absolute;
-      z-index: 2;
-      left: 2%;
-      bottom: 20%;
-      margin: 0;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(3rem, 8vw, 3.8rem);
-      font-weight: 700;
-      line-height: .95;
-      letter-spacing: -.035em;
-      color: #F4FBFF;
-      text-shadow: 0 12px 30px rgba(0, 0, 0, .5);
-    }
-
-    /* 画像の下に敷く暗い膜 */
-    .profile-visual::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: linear-gradient(0deg,
-          rgba(5, 8, 16, .48) 0%,
-          transparent 55%);
-    }
-  </style>
 </head>
 
 <body>
@@ -123,10 +50,8 @@
       <!-- 右 -->
       <div class="profile-main">
 
-        <!-- 名前 + 顔ドアップを同じボックス -->
-        <!-- 顔画像は style の --profile-face で指定 -->
-
-        <div class="profile-visual" style="--profile-face:url('images/Vpro.png');">
+        <div class="profile-visual">
+          <img class="profile-face" src="images/Vpro.png" alt="">
           <h1 class="profile-name">無季 氷下魚</h1>
         </div>
 

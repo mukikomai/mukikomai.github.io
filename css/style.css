@@ -497,282 +497,395 @@ footer {
 
 /* ---------- profile ---------- */
 
-
-/* ---------- 左のふよふよ画像 ---------- */
-
-.profile-character-wrap {
-  display: flex;
-  justify-content: center;
-  left: clamp(-180px, -8vw, -70px);
-  width: clamp(600px, 22vw, 1020px);
-  height: 200%;
-  align-items: center;
-  justify-content: center;
+.profile-page{
+  max-width:1100px;
+  margin:0 auto;
+  padding:96px 24px 120px;
 }
 
-.profile-character {
-  display: block;
-  width: 120%;
-  height: 120%;
-  object-fit: contain;
-  animation: profileFloat 4s ease-in-out infinite;
-  filter: drop-shadow(-18px 18px 2px rgba(0, 0, 0, .28));
+.profile-hero{
+  position:relative;
+  display:block;
+  min-height:720px;
 }
 
-@keyframes profileFloat {
+/* ---------- 左：ふよふよする人物 ---------- */
 
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-14px);
-  }
+.profile-character-wrap{
+  position:absolute;
+  z-index:1;
+  left:clamp(-180px,-8vw,-70px);
+  top:-25px;
+  width:clamp(420px,42vw,620px);
+  height:820px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  pointer-events:none;
+  overflow:visible;
 }
 
-/* ---------- 上部レイアウト ---------- */
+.profile-character{
+  display:block;
+  width:130%;
+  max-width:none;
+  height:820px;
+  object-fit:contain;
+  object-position:center top;
+  animation:profileFloat 4s ease-in-out infinite;
+  filter:drop-shadow(-18px 18px 2px rgba(0,0,0,.28));
+}
 
-.profile-hero {
-  display: grid;
-  grid-template-columns: 360px minmax(0, 1fr);
-  gap: 64px;
-  align-items: center;
+@keyframes profileFloat{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-14px);}
+}
+
+/* ---------- 右側 ---------- */
+
+.profile-main{
+  position:relative;
+  z-index:2;
+  width:min(760px,calc(100% - 250px));
+  margin-left:auto;
+}
+
+/* ---------- 名前 + 顔アップ ---------- */
+
+.profile-face{
+    position:absolute;
+    z-index:0;
+    top:-410px;
+    left:200px;
+
+    width:800px;
+    height:800%;
+
+    object-position:center;
+
+    opacity:1;
+
+    /* 左を透明、右を不透明にする */
+    -webkit-mask-image:linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,.05) 10%,
+        rgba(0,0,0,.25) 20%,
+        #000 82%
+    );
+
+    mask-image:linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,.05) 40%,
+        rgba(0,0,0,.75) 70%,
+        #000 92%
+    );
+}
+
+
+.profile-visual{
+    position:relative;
+    width:100%;
+    height:170px;
+    min-height:170px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--surface);
+}
+
+.profile-visual::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background-image:
+    linear-gradient(90deg,
+      rgba(5,8,16,.05) 0%,
+      rgba(5,8,16,.10) 20%,
+      rgba(5,8,16,.38) 48%,
+      rgba(5,8,16,.78) 75%,
+      rgba(5,8,16,.95) 100%),
+    var(--profile-face);
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+.profile-visual::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(0deg,
+    rgba(5,8,16,.55) 0%,
+    rgba(5,8,16,0) 55%);
+}
+
+.profile-name{
+  position:absolute;
+  z-index:2;
+  left:32px;
+  bottom:30px;
+  margin:0;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(3rem,8vw,6.8rem);
+  font-weight:700;
+  line-height:.95;
+  letter-spacing:-.035em;
+  color:#F4FBFF;
+  text-shadow:0 8px 30px rgba(0,0,0,.55);
 }
 
 /* ---------- 4項目 ---------- */
 
-.profile-data {
-  margin-top: 28px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--surface);
-  backdrop-filter: blur(10px);
+.profile-data{
+  margin-top:28px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--surface);
+  backdrop-filter:blur(10px);
 }
 
-.profile-data-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.profile-data-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
 }
 
-.profile-data-item {
-  padding: 20px 22px;
-  min-height: 88px;
-  border-bottom: 1px solid var(--border);
+.profile-data-item{
+  padding:20px 22px;
+  min-height:88px;
+  border-bottom:1px solid var(--border);
 }
 
-.profile-data-item:nth-child(odd) {
-  border-right: 1px solid var(--border);
+.profile-data-item:nth-child(odd){
+  border-right:1px solid var(--border);
 }
 
-.profile-data-item:nth-last-child(-n+2) {
-  border-bottom: none;
+.profile-data-item:nth-last-child(-n+2){
+  border-bottom:none;
 }
 
-.profile-label {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--muted);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: .72rem;
-  letter-spacing: .04em;
+.profile-label{
+  display:block;
+  margin-bottom:6px;
+  color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  letter-spacing:.04em;
 }
 
-.profile-value {
-  display: block;
-  color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: .95rem;
+.profile-value{
+  display:block;
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.95rem;
 }
 
-.profile-value a {
-  color: var(--accent);
+.profile-value a{
+  color:var(--accent);
 }
 
 /* ---------- 棒 ---------- */
 
-.description-divider {
-  height: 72px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.description-divider{
+  height:72px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.description-divider::before {
-  content: '';
-  width: 600px;
-  height: 1px;
-  background: var(--border-strong);
+.description-divider::before{
+  content:'';
+  width:600px;
+  max-width:100%;
+  height:1px;
+  background:var(--border-strong);
 }
 
 /* ---------- DESCRIPTION ---------- */
 
-.description-box {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 28px 30px 32px;
-  background: var(--surface);
-  backdrop-filter: blur(10px);
+.description-box{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:28px 30px 32px;
+  background:var(--surface);
+  backdrop-filter:blur(10px);
 }
 
-.description-title {
-  margin: 0 0 20px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: .08em;
-  color: var(--accent);
+.description-title{
+  margin:0 0 20px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  letter-spacing:.08em;
+  color:var(--accent);
 }
 
-.description-text {
-  color: var(--text);
-  font-size: .9rem;
-  line-height: 2;
-  white-space: pre-line;
+.description-text{
+  color:var(--text);
+  font-size:.9rem;
+  line-height:2;
+  white-space:pre-line;
 }
 
-@media(max-width:520px) {
-  .profile-data-grid {
-    grid-template-columns: 1fr;
+/* ---------- tablet / mobile ---------- */
+
+@media(max-width:800px){
+
+  .profile-page{
+    padding:64px 18px 90px;
   }
 
-  .profile-data-item:nth-child(odd) {
-    border-right: none;
+  .profile-hero{
+    display:block;
+    min-height:0;
   }
 
-  .profile-data-item:nth-last-child(-n+2) {
-    border-bottom: 1px solid var(--border);
+  .profile-character-wrap{
+    position:absolute;
+    z-index:1;
+    left:-18vw;
+    top:-20px;
+    width:136vw;
+    height:760px;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    pointer-events:none;
+    overflow:visible;
   }
 
-  .profile-data-item:last-child {
-    border-bottom: none;
-  }
-}
-
-@media (max-width:640px) {
-  #site-nav {
-    gap: 16px;
-    padding: 0 16px;
+  .profile-character{
+    width:100%;
+    height:1060px;
+    max-width:none;
+    object-fit:contain;
+    object-position:center top;
+    opacity:.78;
   }
 
-  .nav-links {
-    gap: 14px;
+  .profile-main{
+    position:relative;
+    z-index:2;
+    width:100%;
+    margin-left:0;
   }
 
-  .nav-links a {
-    font-size: .72rem;
+  .profile-visual{
+    width:100%;
+    height:100px;
+    min-height:130px;
+    max-height:none;
+  }
+  .profile-face{
+    top:-200px;
+    left:40%;
+
+    width:500px;
+    height:600%;
+     /* 左を透明、右を不透明にする */
+    -webkit-mask-image:linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,.05) 20%,
+        rgba(0,0,0,.25) 50%,
+        #000 82%
+    );
+
+    mask-image:linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0,0,0,.05) 20%,
+        rgba(0,0,0,.75) 70%,
+        #000 92%
+    );
   }
 
-  section {
-    padding: 64px 0;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-page {
-    padding: 64px 18px 90px;
-  }
-
-  .profile-hero {
-    display: block;
-    position: relative;
-    min-height: 0;
-  }
-
-  /* スマホでは人物をボックスの背後に巨大表示 */
-  .profile-character-wrap {
-    position: absolute;
-    z-index: 1;
-    left: -18vw;
-    top: -90px;
-    width: 120%;
-    height: 200%;
-    min-height: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    pointer-events: none;
-    overflow: visible;
-  }
-
-  .profile-character {
-    width: 120%;
-    height: 200%;
-    max-width: none;
-    object-fit: contain;
-    object-position: center top;
-    opacity: .78;
-  }
-
-  .profile-main {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    margin-left: 0;
-  }
-
-
-  /* 名前 + 顔アップを同じボックスにする */
-  .profile-visual {
-    position: relative;
-    min-height: 400px;
-    max-height: 100px;
-    min-width: 100%;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--surface);
-    backdrop-filter: blur(10px);
-  }
-
-  /* 顔のドアップ */
-  .profile-visual::before {
-    content: '';
-    min-height: 350px;
-    max-height: 200px;
-    min-width: 700px;
-    position: absolute;
-    inset: 0;
+  .profile-visual::before{
+    inset:0;
     background-image:
       linear-gradient(90deg,
-        rgba(5, 8, 16, .94) 30%,
-        rgba(5, 8, 16, .78) 50%,
-        rgba(5, 8, 16, .35) 70%,
-        rgba(5, 8, 16, .08) 98%,
-        rgba(5, 8, 16, .0) 100%),
+        rgba(5,8,16,.12) 0%,
+        rgba(5,8,16,.18) 20%,
+        rgba(5,8,16,.42) 48%,
+        rgba(5,8,16,.80) 75%,
+        rgba(5,8,16,.96) 100%),
       var(--profile-face);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 1;
+    background-size:cover;
+    background-position:center;
   }
 
-  .profile-data,
-  .description-box {
-    position: relative;
-    z-index: 2;
-  }
-
-  .profile-visual {
-    min-height: 100px;
-  }
-
-  .profile-name {
-    position: absolute;
-    z-index: 2;
-    left: 2%;
-    bottom: 20%;
-    margin: 0;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(3rem, 8vw, 3.8rem);
-    font-weight: 700;
-    line-height: .95;
-    letter-spacing: -.035em;
-    color: #F4FBFF;
-    text-shadow: 0 12px 30px rgba(0, 0, 0, .5);
+  .profile-name{
+    left:24px;
+    bottom:28px;
+    font-size:clamp(2.7rem,12vw,5rem);
   }
 }
+
+@media(max-width:520px){
+
+  .profile-data-grid{
+    grid-template-columns:1fr;
+  }
+
+  .profile-data-item:nth-child(odd){
+    border-right:none;
+  }
+
+  .profile-data-item:nth-last-child(-n+2){
+    border-bottom:1px solid var(--border);
+  }
+
+  .profile-data-item:last-child{
+    border-bottom:none;
+  }
+}
+
+@media(max-width:640px){
+
+  #site-nav{
+    height:var(--nav-h);
+    min-height:var(--nav-h);
+    padding:0 12px;
+    gap:12px;
+    overflow:visible;
+  }
+
+  .nav-logo{
+    max-width:110px;
+    height:auto;
+  }
+
+  .nav-links{
+    height:100%;
+    min-width:0;
+    flex-shrink:1;
+    gap:14px;
+    align-items:center;
+  }
+
+  .nav-links a{
+    flex-shrink:0;
+    display:inline-block;
+    line-height:1.5;
+    font-size:.72rem;
+  }
+
+  section{
+    padding:64px 0;
+  }
+
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .profile-page{
+    padding:64px 18px 90px;
+  }
+}
+
