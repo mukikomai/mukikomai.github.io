@@ -981,3 +981,75 @@ footer {
     font-size: 24px;
   }
 }
+
+/* ============ PV CREATE ============ */
+
+#pv-gallery {
+  padding: 48px 0 100px;
+}
+
+#pv-gallery .pv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 28px;
+  margin-top: 28px;
+}
+
+#pv-gallery .pv-card {
+  overflow: hidden;
+  border: 1px solid rgba(160, 210, 255, 0.20);
+  border-radius: 10px;
+  background: rgba(10, 20, 35, 0.72);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+#pv-gallery .pv-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(160, 210, 255, 0.48);
+  box-shadow: 0 12px 36px rgba(80, 160, 255, 0.08);
+}
+
+#pv-gallery .pv-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #080d16;
+}
+
+#pv-gallery .pv-video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#pv-gallery .pv-info {
+  padding: 22px;
+}
+
+#pv-gallery .pv-category {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: #9bd7ff;
+}
+
+#pv-gallery .pv-info h3 {
+  margin: 12px 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.3rem;
+  color: #e6f3ff;
+}
+
+#pv-gallery .pv-info p {
+  margin: 0;
+  line-height: 1.8;
+  font-size: 0.92rem;
+  color: #aab9ca;
+}
+
+.page-description {
+  margin-top: 16px;
+  line-height: 1.8;
+  color: #aab9ca;
+}
