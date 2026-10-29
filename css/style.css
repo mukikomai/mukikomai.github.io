@@ -889,3 +889,95 @@ footer {
   }
 }
 
+/* ============ MARSHMALLOW ============ */
+
+#marshmallow .marshmallow-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 36px;
+  margin-top: 28px;
+  border: 1px solid rgba(160, 210, 255, 0.22);
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(100, 170, 220, 0.10),
+      rgba(10, 20, 35, 0.65)
+    );
+  box-shadow: 0 0 30px rgba(100, 180, 255, 0.04);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#marshmallow .marshmallow-card:hover {
+  border-color: rgba(160, 210, 255, 0.45);
+  box-shadow: 0 0 30px rgba(100, 180, 255, 0.10);
+}
+
+#marshmallow .marshmallow-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(160, 210, 255, 0.3);
+  border-radius: 50%;
+  color: #b8e1ff;
+  font-size: 30px;
+  background: rgba(120, 190, 255, 0.07);
+}
+
+#marshmallow .marshmallow-content {
+  flex: 1;
+}
+
+#marshmallow .marshmallow-content h3 {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+  color: #dceeff;
+}
+
+#marshmallow .marshmallow-content p {
+  margin: 0 0 22px;
+  line-height: 1.9;
+  color: #aab9ca;
+}
+
+#marshmallow .marshmallow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 12px 22px;
+  border: 1px solid rgba(160, 210, 255, 0.45);
+  border-radius: 6px;
+  color: #e7f5ff;
+  text-decoration: none;
+  background: rgba(100, 170, 220, 0.12);
+  transition: background 0.25s, border-color 0.25s;
+}
+
+#marshmallow .marshmallow-btn:hover {
+  background: rgba(100, 170, 220, 0.24);
+  border-color: #b8e1ff;
+}
+
+#marshmallow .marshmallow-btn span {
+  font-size: 1.1em;
+}
+
+/* スマートフォン対応 */
+@media (max-width: 600px) {
+  #marshmallow .marshmallow-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  #marshmallow .marshmallow-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
