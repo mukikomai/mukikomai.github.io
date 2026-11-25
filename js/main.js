@@ -36,26 +36,56 @@ requestAnimationFrame(() => {
   };
   const yen = value => `${Math.round(value).toLocaleString('ja-JP')}円`;
   const get = selector => document.querySelector(selector);
+  const participantData = [];
+  function syncParticipants(count) {
+    const root = get('#participant-fields');
+    if (root.children.length === count) return;
+    [...root.children].forEach((card, i) => {
+      participantData[i] = [...card.querySelectorAll('input')].map(input => input.value);
+    });
+    root.replaceChildren();
+    for (let i = 0; i < count; i++) {
+      const card = document.createElement('div');
+      card.className = 'guide-box full-field';
+      const heading = document.createElement('h3');
+      heading.textContent = `参加者 ${i + 1}`;
+      card.append(heading);
+      ['活動名・名前', 'イラストURL', '音源URL'].forEach((title, k) => {
+        const label = document.createElement('label');
+        label.textContent = title;
+        const input = document.createElement('input');
+        input.type = k === 0 ? 'text' : 'url';
+        input.value = participantData[i]?.[k] || '';
+        label.append(input);
+        card.append(label);
+      });
+      root.append(card);
+    }
+  }
   function calculate() {
     const quality = get('input[name="quality"]:checked')?.value || '文字入れのみ本家再現';
     const length = get('input[name="length"]:checked')?.value || 'short';
-    const base = priceTable[quality][length];
+    const people = Math.min(100, Math.max(1, Math.floor(Number(get('#participant-count').value) || 1)));
+    const unit = priceTable[quality][length];
+    const base = unit * people;
+    syncParticipants(people);
+    get('#estimate-people').textContent = `${people}人`;
     const addonInputs = [...document.querySelectorAll('.addon:checked')];
     const addons = addonInputs.reduce((sum, item) => sum + Number(item.value), 0);
     const revisionCount = Math.max(0, Number(get('#extra-revisions').value) || 0);
     const revisions = revisionCount * 500;
-    const subtotal = base + addons + revisions;
+    const subtotal = (unit + addons) * people + revisions;
     const rush = get('#rush').checked;
     const total = rush ? subtotal * 1.5 : subtotal;
-    get('#estimate-base').textContent = yen(base);
-    get('#estimate-addons').textContent = yen(addons);
+    get('#estimate-base').textContent = `${yen(unit)} × ${people}人 = ${yen(base)}`;
+    get('#estimate-addons').textContent = `${yen(addons)} × ${people}人 = ${yen(addons * people)}`;
     get('#estimate-revisions').textContent = yen(revisions);
     get('#estimate-rush').textContent = rush ? '1.5倍' : 'なし';
     get('#estimate-total').textContent = yen(total);
     get('#estimate-note').textContent = rush
       ? '短納期補正を適用した概算です。短納期対応の可否は事前確認が必要です。'
-      : '概算金額です。正式な見積もりとは異なる場合があります。';
-    return { quality, length, base, addons, addonLabels: addonInputs.map(item => item.dataset.label), revisionCount, revisions, rush, total };
+      : '概算金額です。簡単な動画は減額できる場合があります。必ず事前にお見積もりをご相談ください。';
+    return { quality, length, people, unit, base, addons, addonLabels: addonInputs.map(item => item.dataset.label), revisionCount, revisions, rush, total };
   }
   document.querySelectorAll('#estimator input').forEach(input => {
     input.addEventListener('input', calculate);
@@ -65,13 +95,17 @@ requestAnimationFrame(() => {
     const e = calculate();
     const lengthLabel = { short: 'Short（1分以内）', chorus: 'サビのみ', full: 'フル（4分以内）' }[e.length];
     const notes = get('#other-notes');
-    notes.value = [notes.value, `【簡易見積もり】${e.quality} / ${lengthLabel}`, `概算：${yen(e.total)}（基本 ${yen(e.base)}、追加作業 ${yen(e.addons)}、修正超過 ${yen(e.revisions)}${e.rush ? '、短納期1.5倍適用' : ''}）`].filter(Boolean).join('\n');
+    notes.value = [notes.value, `【簡易見積もり】${e.quality} / ${lengthLabel} / ${e.people}人`, `概算：${yen(e.total)}（基本 ${yen(e.unit)} × ${e.people}人 = ${yen(e.base)}、追加作業 ${yen(e.addons)} × ${e.people}人 = ${yen(e.addons * e.people)}、修正超過 ${yen(e.revisions)}${e.rush ? '、短納期1.5倍適用' : ''}）`].filter(Boolean).join('\n');
     document.querySelector('#request-template').scrollIntoView({ behavior: 'smooth' });
   });
   get('#generate-template').addEventListener('click', () => {
     const e = calculate();
     const lengthLabel = { short: 'Short（1分以内）', chorus: 'サビのみ', full: 'フル（4分以内）' }[e.length];
     const value = id => get(`#${id}`).value.trim() || '未記入';
+    const participants = [...get('#participant-fields').children].map((card, i) => {
+      const [name, illustration, audio] = [...card.querySelectorAll('input')].map(input => input.value.trim() || '未記入');
+      return `【参加者 ${i + 1}】\n活動名・名前：${name}\nイラストURL：${illustration}\n音源URL：${audio}`;
+    }).join('\n\n');
     get('#template-output').value = `はじめまして。PV・MV制作をお願いしたく、ご連絡いたしました。
 
 ■依頼者名・活動名
@@ -84,11 +118,14 @@ ${lengthLabel}
 ■楽曲名・アーティスト
 ${value('song-title')}
 
-■音源URL
-${value('audio-url')}
+■参加人数
+${e.people}人
 
-■イラストURL
-${value('illustration-url')}
+■参加者情報
+${participants}
+
+■共通・MIX済み音源URL
+${value('audio-url')}
 
 ■参考MV・PV
 ${value('reference-url')}
@@ -106,8 +143,8 @@ ${value('direction')}
 ${value('other-notes')}
 
 ■概算見積もり
-基本料金：${yen(e.base)}
-追加作業：${yen(e.addons)}${e.addonLabels.length ? `（${e.addonLabels.join('、')}）` : ''}
+基本料金：${yen(e.unit)} × ${e.people}人 = ${yen(e.base)}
+追加作業：${yen(e.addons)} × ${e.people}人 = ${yen(e.addons * e.people)}${e.addonLabels.length ? `（${e.addonLabels.join('、')}）` : ''}
 修正回数超過：${yen(e.revisions)}（無料4回を超える分：${e.revisionCount}回）
 短納期補正：${e.rush ? '1.5倍' : 'なし'}
 概算合計：${yen(e.total)}

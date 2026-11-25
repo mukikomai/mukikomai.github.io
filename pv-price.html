@@ -29,12 +29,12 @@
     <section class="wrap page-head reveal">
       <p class="eyebrow">PV / MV PRODUCTION</p><h1>Price & Order <br>(まだやってません)</h1>
       <p class="page-description">PV・MV制作の料金、制作内容、簡易見積もり、SKIMA依頼用テンプレートをまとめています。</p>
-      <div class="price-jump"><a class="social-btn" href="#price-list">料金表</a><a class="social-btn" href="#estimator">簡易見積もり</a><a class="social-btn" href="#request-template">依頼テンプレート</a></div>
+      <div class="guide-box" role="note"><h3>ご依頼前に必ずご確認ください</h3><p>簡単な動画の場合、料金がお安くなる場合がございますので、必ず事前にお見積もりをご相談ください。必ず作風をご確認のうえ、ご依頼ください！</p><a class="social-btn" href="pvcreate.html">作風・制作実績を確認する</a></div><div class="price-jump"><a class="social-btn" href="#price-list">料金表</a><a class="social-btn" href="#estimator">簡易見積もり</a><a class="social-btn" href="#request-template">依頼テンプレート</a></div>
     </section>
 
     <section id="price-list"><div class="wrap reveal">
       <h2><span class="no">01</span>Price List</h2>
-      <p class="section-lead">4分以内のフル尺を基準価格としています。Shortは1分以内を想定し、フル尺料金の50％を目安に設定しています。</p>
+      <p class="section-lead">4分以内のフル尺を基準価格としています。Shortは1分以内を想定し、フル尺料金の50％を目安に設定しています。<br> 表示料金は1人分です。コラボの場合は基本料金と追加作業料金の合計に参加人数を掛けます（2人なら2倍、3人なら3倍）。</p>
       <div class="table-scroll"><table class="price-table">
         <thead><tr><th>制作内容</th><th>Short<br><small>1分以内</small></th><th>サビのみ</th><th>フル<br><small>4分以内</small></th></tr></thead>
         <tbody>
@@ -54,7 +54,7 @@
 
     <section id="estimator"><div class="wrap reveal">
       <h2><span class="no">02</span>Estimate</h2>
-      <p class="section-lead">制作内容やオプションを選択すると、概算料金を自動計算します。正式な料金は依頼内容を確認したうえで決定します。</p>
+      <p class="section-lead">制作内容やオプションを選択すると、概算料金を自動計算します。正式な料金は依頼内容を確認したうえで決定します。<br>計算式：((基本料金 ＋ 追加作業料金) × 参加人数 ＋ 修正料金) × 短納期補正</p>
       <div class="estimate-layout">
         <div class="estimate-panel">
           <fieldset class="estimate-field"><legend>制作内容</legend><div class="choice-list">
@@ -68,7 +68,7 @@
             <label class="choice"><input type="radio" name="length" value="chorus"><span>サビのみ</span></label>
             <label class="choice"><input type="radio" name="length" value="full"><span>フル（4分以内）</span></label>
           </div></fieldset>
-          <fieldset class="estimate-field"><legend>追加作業 <small>必要なものを選択</small></legend><div class="choice-list">
+          <fieldset class="estimate-field"><legend>参加人数（コラボ）</legend><label class="field-label" for="participant-count">動画に参加する人数</label><input id="participant-count" class="number-input" type="number" min="1" max="100" step="1" value="1"><p class="fine-print">（基本料金 ＋ 追加作業料金）× 人数。簡単な動画は減額できる場合があります。</p></fieldset><fieldset class="estimate-field"><legend>追加作業 <small>必要なものを選択</small></legend><div class="choice-list">
             <label class="choice"><input type="checkbox" class="addon" value="1000" data-label="素材加工・調整"><span>素材加工・調整 <b>+1,000円</b></span></label>
             <label class="choice"><input type="checkbox" class="addon" value="2000" data-label="差分の補完・加工"><span>差分の補完・加工 <b>+2,000円</b></span></label>
             <label class="choice"><input type="checkbox" class="addon" value="3000" data-label="特殊なエフェクト・演出"><span>特殊なエフェクト・演出 <b>+3,000円</b></span></label>
@@ -78,7 +78,7 @@
           <fieldset class="estimate-field"><legend>納期</legend><label class="choice"><input type="checkbox" id="rush"><span>21日以内の短納期対応（最終見積金額の1.5倍）</span></label><p class="fine-print">通常納期は1～2か月程度です。短納期は学業との両立の都合上、お受けできない場合があります。</p></fieldset>
         </div>
         <aside class="estimate-result" aria-live="polite"><span class="result-label">ESTIMATED TOTAL</span><div id="estimate-total" class="estimate-total">3,000円</div>
-          <dl class="estimate-breakdown"><div><dt>基本料金</dt><dd id="estimate-base">3,000円</dd></div><div><dt>追加作業</dt><dd id="estimate-addons">0円</dd></div><div><dt>修正回数超過</dt><dd id="estimate-revisions">0円</dd></div><div><dt>短納期補正</dt><dd id="estimate-rush">なし</dd></div></dl>
+          <dl class="estimate-breakdown"><div><dt>基本料金（人数分）</dt><dd id="estimate-base">3,000円</dd></div><div><dt>参加人数</dt><dd id="estimate-people">1人</dd></div><div><dt>追加作業（人数分）</dt><dd id="estimate-addons">0円</dd></div><div><dt>修正回数超過</dt><dd id="estimate-revisions">0円</dd></div><div><dt>短納期補正</dt><dd id="estimate-rush">なし</dd></div></dl>
           <p id="estimate-note" class="estimate-note">概算金額です。正式な見積もりとは異なる場合があります。</p>
           <button type="button" class="primary-btn" id="apply-estimate">この内容を依頼テンプレートに反映</button>
         </aside>
@@ -104,8 +104,8 @@
           <label>依頼者名・活動名<input id="client-name" type="text" placeholder="例：〇〇"></label>
           <label>希望納期<input id="desired-deadline" type="text" placeholder="例：○月○日まで／通常納期でOK"></label>
           <label>楽曲名・アーティスト<input id="song-title" type="text" placeholder="例：楽曲名 / アーティスト名"></label>
-          <label>音源URL<input id="audio-url" type="url" placeholder="音源の共有URL"></label>
-          <label>イラストURL<input id="illustration-url" type="url" placeholder="イラストの共有URL"></label>
+          <label>共通・MIX済み音源URL（任意）<input id="audio-url" type="url" placeholder="共通音源の共有URL"></label>
+          <div class="full-field"><h3>参加者情報</h3><p class="fine-print">簡易見積もりで選択した人数分の入力欄が表示されます。</p><div id="participant-fields" class="template-grid"></div></div>
           <label>参考MV・PV URL<input id="reference-url" type="url" placeholder="参考映像のURL"></label>
           <label class="full-field">希望するコンセプト・世界観<textarea id="concept" rows="3" placeholder="作品の雰囲気、色味、伝えたいことなど"></textarea></label>
           <label class="full-field">希望する演出・表現<textarea id="direction" rows="3" placeholder="文字の動き、カメラワーク、入れたい演出など"></textarea></label>
@@ -119,7 +119,7 @@
         <label class="output-label" for="template-output">SKIMA送信用の文章</label><textarea id="template-output" rows="18" placeholder="「依頼文を作成」を押すと、ここに文章が生成されます。"></textarea>
         <p id="copy-status" class="fine-print" role="status"></p>
       </div>
-      <p class="skima-note">生成した文章を確認・編集してから、SKIMAのメッセージ欄へ貼り付けてください。</p>
+      <p class="skima-note"><strong>簡単な動画の場合、料金がお安くなる場合がございますので、必ず事前にお見積もりをご相談ください。必ず作風をご確認のうえ、ご依頼ください！</strong></p><p class="skima-note">生成した文章を確認・編集してから、SKIMAのメッセージ欄へ貼り付けてください。</p>
     </div></section>
   </main>
   <footer><div class="wrap">© 2027 無季 氷下魚</div></footer>
