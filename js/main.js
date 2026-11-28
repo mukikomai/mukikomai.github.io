@@ -29,10 +29,10 @@ requestAnimationFrame(() => {
   const estimator = document.querySelector('#estimator');
   if (!estimator) return;
   const priceTable = {
-    '文字入れのみ本家再現': { short: 3000, chorus: 4000, full: 6000 },
-    '本家再現': { short: 6000, chorus: 8000, full: 12000 },
-    '本家風オリジナルPV・MV': { short: 9000, chorus: 12000, full: 18000 },
-    '完全オリジナルPV・MV': { short: 15000, chorus: 20000, full: 30000 }
+    '文字入れのみ本家再現': { short: 2000, chorus: 2500, full: 3000 },
+    '本家再現': { short: 3000, chorus: 4000, full: 6000 },
+    '本家風オリジナルPV・MV': { short: 4000, chorus: 5500, full: 8000 },
+    '完全オリジナルPV・MV': { short: 5000, chorus: 7000, full: 10000 }
   };
   const yen = value => `${Math.round(value).toLocaleString('ja-JP')}円`;
   const get = selector => document.querySelector(selector);
